@@ -28,41 +28,41 @@ namespace _2task.viewmodel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public int Client_Id
+        public int Employee_Id
         {
-            get { return Users._client_id; }
+            get { return Employee._employee_id; }
             set
             {
-                Users._client_id = value;
-                OnPropertyChanged(nameof(Client_Id));
+                Employee._employee_id = value;
+                OnPropertyChanged(nameof(Employee_Id));
             }
         }
-        public string Client_Login
+        public string Employee_Login
         {
-            get { return Users._client_login; }
+            get { return Employee._employee_login; }
             set
             {
-                Users._client_login = value;
-                OnPropertyChanged(nameof(Client_Login));
+                Employee._employee_login = value;
+                OnPropertyChanged(nameof(Employee_Login));
             }
         }
-        public string Client_Password
+        public string Employee_Password
         {
-            get { return Users._client_password; }
+            get { return Employee._employee_password; }
             set
             {
-                Users._client_password = value;
-                OnPropertyChanged(nameof(Client_Password));
+                Employee._employee_password = value;
+                OnPropertyChanged(nameof(Employee_Password));
             }
         }
 
-        public int Client_teg_id
+        public int Employee_tag_id
         {
-            get { return Users._client_teg_id; }
+            get { return Employee._employee_tag_id; }
             set
             {
-                Users._client_teg_id = value;
-                OnPropertyChanged(nameof(Client_teg_id));
+                Employee._employee_tag_id = value;
+                OnPropertyChanged(nameof(Employee_tag_id));
             }
         }
 
@@ -85,26 +85,26 @@ namespace _2task.viewmodel
 
         private void Login()
         {
-            if (string.IsNullOrEmpty(Client_Login))
+            if (string.IsNullOrEmpty(Employee_Login))
             {
                 MessageBox.Show("Пожалуйста, введите Логин");
                 return;
             }
 
-            if (string.IsNullOrEmpty(Client_Password))
+            if (string.IsNullOrEmpty(Employee_Password))
             {
                 MessageBox.Show("Пожалуйста, введите Пароль");
                 return;
             }
 
 
-            if (!Regex.IsMatch(Client_Login, @"^[a-zA-Z]+$"))
+            if (!Regex.IsMatch(Employee_Login, @"^[a-zA-Z]+$"))
             {
                 MessageBox.Show("Имя пользователя должно содержать только английские символы");
                 return;
             }
 
-            string hashedInputPassword = HashPassword(Client_Password);
+            string hashedInputPassword = HashPassword(Employee_Password);
 
             using (SqlConnection conn = new SqlConnection(Other.request))
             {
@@ -113,23 +113,23 @@ namespace _2task.viewmodel
                     conn.Open();
                     if (conn.State == ConnectionState.Open)
                     {
-                        using (SqlCommand command = new SqlCommand(@"SELECT Client_Password, CLient_teg_id FROM Клиенты WHERE Client_Login = @Client_Login", conn))
+                        using (SqlCommand command = new SqlCommand(@"SELECT Employee_Password, Employee_tag_id FROM Сотрудники WHERE Employee_Login = @Employee_Login", conn))
                         {
-                            command.Parameters.AddWithValue("@Client_Login", Client_Login);
+                            command.Parameters.AddWithValue("@Employee_Login", Employee_Login);
                             using (SqlDataReader reader = command.ExecuteReader())
                                 if (reader.Read())
                                 {
                                     
                                     string storedHashedPassword = reader.GetString(0);
-                                    int Client_teg_id = reader.GetInt32(1);
+                                    int Employee_tag_id = reader.GetInt32(1);
 
                                     reader.Close();
 
-                                    if (storedHashedPassword != null && VerifyPassword(Client_Login, hashedInputPassword))
+                                    if (storedHashedPassword != null && VerifyPassword(Employee_Login, hashedInputPassword))
                                     {
-                                        Users._client_teg_id = Client_teg_id;
+                                        Employee._employee_tag_id = Employee_tag_id;
                                         conn.Close();
-                                        MessageBox.Show("Успешый вход в аккаунт: " + Client_Login);
+                                        MessageBox.Show("Успешый вход в аккаунт: " + Employee_Login);
                                     }
                                     else
                                     {
@@ -157,11 +157,11 @@ namespace _2task.viewmodel
             }
         }
 
-        private string HashPassword(string client_password)
+        private string HashPassword(string employee_password)
         {
             using (SHA256 sha256 = SHA256.Create())
             {
-                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(client_password));
+                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(employee_password));
                 StringBuilder builder = new StringBuilder();
                 for (int i = 0; i < hashedBytes.Length; i++)
                 {
@@ -171,14 +171,14 @@ namespace _2task.viewmodel
             }
         }
 
-        private bool VerifyPassword(string client_login, string inputPassword)
+        private bool VerifyPassword(string employee_login, string inputPassword)
         {
             using (SqlConnection conn = new SqlConnection(Other.request))
             {
                 conn.Open();
-                using (SqlCommand command = new SqlCommand(@"SELECT Client_Password FROM Клиенты WHERE Client_Login = @Client_Login", conn))
+                using (SqlCommand command = new SqlCommand(@"SELECT Employee_Password FROM Сотрудники WHERE Employee_Login = @Employee_Login", conn))
                 {
-                    command.Parameters.AddWithValue("@Client_Login", client_login);
+                    command.Parameters.AddWithValue("@Employee_Login", employee_login);
                     string storedHashedPassword = (string)command.ExecuteScalar();
 
                     if (storedHashedPassword != null)

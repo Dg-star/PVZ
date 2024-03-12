@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using _2task.view;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace _2task.viewmodel
 {
@@ -23,6 +24,8 @@ namespace _2task.viewmodel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public ICommand SaveChangesCommand { get; }
+        public ICommand DeleteCommand { get; }
 
         private ObservableCollection<Product> _product;
 
@@ -74,11 +77,67 @@ namespace _2task.viewmodel
             }
         }
 
+        private void SaveChanges()
+        {
+            //if (Employee._employee_tag_id == 1)
+            //{
+                foreach (var product in Products)
+                {
+                    using (SqlConnection connection = new SqlConnection(Other.request))
+                    {
+                    string query = $"UPDATE Товар SET product_name = '{product.Product_Name}', Price = {product.Price}, Quantity = {product.Quantity} WHERE Product_Id = {product.Product_Id}";
 
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                        
+                }
+            }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Только админы могут изменять названия товаров.");
+            //}
+        }
+
+        private void DeleteSelectedProducts()
+        {
+            //if (Employee._employee_tag_id == 1)
+            //{
+
+            var selectedProducts = Products.Where(p => p.IsSelected).ToList();
+
+            foreach (var product in selectedProducts)
+            {
+                using (SqlConnection connection = new SqlConnection(Other.request))
+                {
+                    string query = $"DELETE FROM Товар WHERE Product_Id = {product.Product_Id}";
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            // Remove the selected products from the Products collection
+            foreach (var product in selectedProducts)
+            {
+                Products.Remove(product);
+            }
+
+            MessageBox.Show("Выбранный товар(ы) был(и) удален(ы).");
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Только админы могут удалять товар.");
+            //}
+        }
 
         public CatalogViewModel()
         {
             Products = new ObservableCollection<Product>();
+            SaveChangesCommand = new RelayCommand(SaveChanges);
+            DeleteCommand = new RelayCommand(DeleteSelectedProducts);
             LoadProductsFromDatabase();
         }
         private void CloseWindow()

@@ -10,11 +10,10 @@
     <Grid>
         <StackPanel>
             <TextBlock Text="Введите ваш Логин(английские символы)" />
-            <TextBox Text="{Binding Client_Login}" />
+            <TextBox Text="{Binding Employee_Login}" />
             <TextBlock Text="Введите ваш Пароль" />
-            <TextBox Text="{Binding Client_Password}" />
+            <TextBox Text="{Binding Employee_Password}" />
             <StackPanel Orientation="Horizontal"/>
-            <TextBlock Text="Введите Captcha" />
             <Button x:Name="login" Content="Войти" Command="{Binding LoginCommand}"/>
         </StackPanel>
     </Grid>

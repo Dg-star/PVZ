@@ -4,20 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_2task.view"
-        mc:Ignorable="d"
-        Height="800" Width="1600">
+        mc:Ignorable="d">
 
     <Grid>
         <DataGrid ItemsSource="{Binding Products}" AutoGenerateColumns="False">
             <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Выбрать">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Номер товара" Binding="{Binding Product_Id}" Width="100" IsReadOnly="True" />
                 <DataGridTextColumn Header="Продавец" Binding="{Binding Seller_Name}" Width="400" IsReadOnly="True" />
-                <DataGridTextColumn Header="Название товара" Binding="{Binding Product_Name}" Width="600" IsReadOnly="True" />
-                <DataGridTextColumn Header="Цена" Binding="{Binding Price}" Width="200" IsReadOnly="True" />
-                <DataGridTextColumn Header="Категория товара" Binding="{Binding Category_Name}" Width="200" IsReadOnly="True" />
+                <DataGridTextColumn Header="Название товара" Binding="{Binding Product_Name}" Width="600" IsReadOnly="False" />
+                <DataGridTextColumn Header="Цена" Binding="{Binding Price}" Width="100" IsReadOnly="False" />
+                <DataGridTextColumn Header="Категория товара" Binding="{Binding Category_Name}" Width="150" IsReadOnly="True" />
                 <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="100" IsReadOnly="False" />
             </DataGrid.Columns>
-
         </DataGrid>
+        <Button Content="Сохранить изменение названия товара" Command="{Binding SaveChangesCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10" />
+        <Button Content="Удалить выбранные товары" Command="{Binding DeleteCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="250,0,0,10" Background="Red" Foreground="White" />
+
     </Grid>
 </UserControl>

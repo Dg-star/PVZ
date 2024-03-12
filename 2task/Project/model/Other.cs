@@ -8,7 +8,7 @@ namespace _2task.model
 {
     public class Other
     {
-        public static string request = @"Data Source=DBSRV\GLO2023; Initial Catalog=LyahNA; Integrated Security = true";
+        public static string request = @"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=LyahNA; Integrated Security = true";
         public static string _hashedPassword;
     }
 }

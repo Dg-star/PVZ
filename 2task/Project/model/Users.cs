@@ -15,7 +15,6 @@ namespace _2task.model
         public static string _client_phone_number;
         public static string _client_login;
         public static string _client_password;
-        public static int _client_teg_id;
     }
 
 }

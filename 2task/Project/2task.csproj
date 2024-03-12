@@ -83,6 +83,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="view\PVZ.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="windows\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -99,11 +103,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="model\Employee.cs" />
+    <Compile Include="model\PVZ.cs" />
+    <Compile Include="viewmodel\PVZViewModel.cs" />
+    <Compile Include="view\PVZ.xaml.cs">
+      <DependentUpon>PVZ.xaml</DependentUpon>
+    </Compile>
     <Compile Include="windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="model\Check.cs" />
-    <Compile Include="model\Codes.cs" />
     <Compile Include="model\Other.cs" />
     <Compile Include="model\Product.cs" />
     <Compile Include="viewmodel\CatalogViewModel.cs" />
