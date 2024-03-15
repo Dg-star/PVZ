@@ -19,7 +19,7 @@ namespace _2task
         {
             MainWindow = new MainWindow
             {
-                DataContext = new ReleasePointsViewModel()
+                DataContext = new CatalogViewModel()
             };
             MainWindow.Show();
             

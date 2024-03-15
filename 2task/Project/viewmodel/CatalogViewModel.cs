@@ -49,7 +49,7 @@ namespace _2task.viewmodel
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT T.Product_Id, PT.category_Id, S.seller_name, T.product_name, T.Quantity, T.Price, CT.category_name " +
+                string query = "SELECT T.Product_Id, PT.category_Id, S.seller_name, S.seller_surname, T.product_name, T.Quantity, T.Price, CT.category_name " +
                     "FROM Товар T " +
                     "JOIN [Категория_товара] PT ON T.category_id = PT.category_id " +
                     "JOIN [Продавцы] S ON T.seller_id = S.seller_id " +
@@ -67,7 +67,7 @@ namespace _2task.viewmodel
                         Product_Id = Convert.ToInt32(reader["Product_Id"]),
                         Product_Name = reader["Product_name"].ToString(),
                         Category_id = Convert.ToInt32(reader["category_Id"]),
-                        Seller_Name = reader["Seller_name"].ToString(),
+                        Seller_Name = reader["Seller_name"].ToString() + " " + reader["seller_surname"].ToString(),
                         Quantity = reader["Quantity"] != DBNull.Value ? Convert.ToInt32(reader["Quantity"]) : (int?)null,
                         Price = reader["Price"] != DBNull.Value ? Convert.ToInt32(reader["Price"]) : (int?)null,
                         Category_Name = reader["category_name"].ToString()

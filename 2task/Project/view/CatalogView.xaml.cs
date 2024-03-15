@@ -18,9 +18,9 @@ namespace _2task.view
     /// <summary>
     /// Логика взаимодействия для Catalog.xaml
     /// </summary>
-    public partial class Catalog : UserControl
+    public partial class CatalogView : UserControl
     {
-        public Catalog()
+        public CatalogView()
         {
             InitializeComponent();
         }
