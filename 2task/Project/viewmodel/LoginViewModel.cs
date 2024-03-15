@@ -15,6 +15,7 @@ using _2task.model;
 using System.Security.Cryptography;
 using CommunityToolkit.Mvvm.Input;
 using _2task.view;
+using _2task.secret;
 
 namespace _2task.viewmodel
 {

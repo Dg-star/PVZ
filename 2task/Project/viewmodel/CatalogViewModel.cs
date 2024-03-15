@@ -11,6 +11,7 @@ using System.Windows;
 using _2task.view;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using _2task.secret;
 
 namespace _2task.viewmodel
 {

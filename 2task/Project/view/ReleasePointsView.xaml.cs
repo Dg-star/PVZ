@@ -18,9 +18,9 @@ namespace _2task.view
     /// <summary>
     /// Логика взаимодействия для PVZ.xaml
     /// </summary>
-    public partial class PVZ : UserControl
+    public partial class ReleasePointsView : UserControl
     {
-        public PVZ()
+        public ReleasePointsView()
         {
             InitializeComponent();
         }

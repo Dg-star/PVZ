@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace _2task.model
 {
-    public class PVZ
+    public class ReleasePoints
     {
         public int _point_id;
         public string _pickup_points_location;

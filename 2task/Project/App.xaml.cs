@@ -19,7 +19,7 @@ namespace _2task
         {
             MainWindow = new MainWindow
             {
-                DataContext = new PVZViewModel()
+                DataContext = new ReleasePointsViewModel()
             };
             MainWindow.Show();
             

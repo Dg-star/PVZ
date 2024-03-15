@@ -83,7 +83,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="view\PVZ.xaml">
+    <Page Include="view\ReleasePointsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -91,7 +91,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\Catalog.xaml">
+    <Page Include="view\CatalogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -104,20 +104,20 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="model\Employee.cs" />
-    <Compile Include="model\PVZ.cs" />
-    <Compile Include="viewmodel\PVZViewModel.cs" />
-    <Compile Include="view\PVZ.xaml.cs">
-      <DependentUpon>PVZ.xaml</DependentUpon>
+    <Compile Include="model\ReleasePoints.cs" />
+    <Compile Include="viewmodel\ReleasePointsViewModel.cs" />
+    <Compile Include="view\ReleasePointsView.xaml.cs">
+      <DependentUpon>ReleasePointsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="model\Other.cs" />
+    <Compile Include="secret\Other.cs" />
     <Compile Include="model\Product.cs" />
     <Compile Include="viewmodel\CatalogViewModel.cs" />
     <Compile Include="viewmodel\LoginViewModel.cs" />
-    <Compile Include="view\Catalog.xaml.cs">
-      <DependentUpon>Catalog.xaml</DependentUpon>
+    <Compile Include="view\CatalogView.xaml.cs">
+      <DependentUpon>CatalogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>

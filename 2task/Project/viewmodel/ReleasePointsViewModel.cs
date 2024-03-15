@@ -1,10 +1,11 @@
 ﻿using _2task.model;
+using _2task.secret;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System;
 
-internal class PVZViewModel : INotifyPropertyChanged
+internal class ReleasePointsViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -13,17 +14,17 @@ internal class PVZViewModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    private ObservableCollection<PVZ> _pvz;
+    private ObservableCollection<ReleasePoints> _releasepoint;
 
-    public ObservableCollection<PVZ> PVZS
+    public ObservableCollection<ReleasePoints> ReleasePointss
     {
-        get { return _pvz; }
+        get { return _releasepoint; }
         set
         {
-            if (_pvz != value)
+            if (_releasepoint != value)
             {
-                _pvz = value;
-                OnPropertyChanged(nameof(PVZS));
+                _releasepoint = value;
+                OnPropertyChanged(nameof(ReleasePointss));
             }
         }
     }
@@ -44,7 +45,7 @@ internal class PVZViewModel : INotifyPropertyChanged
 
             while (reader.Read())
             {
-                PVZS.Add(new PVZ
+                ReleasePointss.Add(new ReleasePoints
                 {
                     Point_Id = Convert.ToInt32(reader["point_id"]),
                     Pickup_Points_Location = reader["pickup_points_location"].ToString(),
@@ -57,9 +58,9 @@ internal class PVZViewModel : INotifyPropertyChanged
         }
     }
 
-    public PVZViewModel()
+    public ReleasePointsViewModel()
     {
-        PVZS = new ObservableCollection<PVZ>();
+        ReleasePointss = new ObservableCollection<ReleasePoints>();
         LoadProductsFromDatabase();
     }
 }
