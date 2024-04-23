@@ -1,6 +1,9 @@
-﻿using System;
+﻿using _2task.secret;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,8 +20,7 @@ namespace _2task.model
         public int? _price;
         public int _category_id;
         public int? _quantity;
-        public bool IsSelected { get; set; }    
-
+        public bool IsSelected { get; set; }
         public int Product_Id
         {
             get { return _product_id; }
@@ -97,7 +99,7 @@ namespace _2task.model
             }
         }
 
-        public int Category_id
+        public int Category_Id
         {
             get { return _category_id; }
             set
@@ -105,7 +107,7 @@ namespace _2task.model
                 if (_category_id != value)
                 {
                     _category_id = value;
-                    OnPropertyChanged(nameof(Category_id));
+                    OnPropertyChanged(nameof(Category_Id));
                 }
             }
         }

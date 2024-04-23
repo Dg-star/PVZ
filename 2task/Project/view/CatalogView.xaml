@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_2task.view"
         mc:Ignorable="d">
-
     <Grid>
         <DataGrid ItemsSource="{Binding Products}" AutoGenerateColumns="False">
             <DataGrid.Columns>
@@ -17,15 +16,45 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Номер товара" Binding="{Binding Product_Id}" Width="100" IsReadOnly="True" />
-                <DataGridTextColumn Header="Продавец" Binding="{Binding Seller_Name}" Width="400" IsReadOnly="True" />
+                
+                <DataGridTemplateColumn Header="Продавец" Width="400">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Seller_Name}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding DataContext.Sellers, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                      DisplayMemberPath="SellerName"
+                      SelectedValuePath="SellerId"
+                      SelectedValue="{Binding Seller_Id, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                
                 <DataGridTextColumn Header="Название товара" Binding="{Binding Product_Name}" Width="600" IsReadOnly="False" />
                 <DataGridTextColumn Header="Цена" Binding="{Binding Price}" Width="100" IsReadOnly="False" />
-                <DataGridTextColumn Header="Категория товара" Binding="{Binding Category_Name}" Width="150" IsReadOnly="True" />
+                <DataGridTemplateColumn Header="Категория товара" Width="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Category_Name}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding DataContext.Categories, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                      DisplayMemberPath="CategoryName"
+                      SelectedValuePath="CategoryId"
+                      SelectedValue="{Binding Category_Id, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="100" IsReadOnly="False" />
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Сохранить изменение названия товара" Command="{Binding SaveChangesCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10" />
         <Button Content="Удалить выбранные товары" Command="{Binding DeleteCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="250,0,0,10" Background="Red" Foreground="White" />
-
+        <Button Content="Добавить новый товар товары" Command="{Binding AddCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="430,0,0,10" Background="Green" Foreground="White" />
     </Grid>
 </UserControl>

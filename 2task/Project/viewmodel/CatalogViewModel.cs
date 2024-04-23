@@ -20,6 +20,7 @@ namespace _2task.viewmodel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -27,9 +28,36 @@ namespace _2task.viewmodel
 
         public ICommand SaveChangesCommand { get; }
         public ICommand DeleteCommand { get; }
+        public ICommand AddCommand { get; set; }
 
         private ObservableCollection<Product> _product;
 
+        private ObservableCollection<Category> _categories;
+        private ObservableCollection<Seller> _sellers;
+        public ObservableCollection<Category> Categories
+        {
+            get { return _categories; }
+            set
+            {
+                if (_categories != value)
+                {
+                    _categories = value;
+                    OnPropertyChanged(nameof(Categories));
+                }
+            }
+        }
+        public ObservableCollection<Seller> Sellers
+        {
+            get { return _sellers; }
+            set
+            {
+                if (_sellers != value)
+                {
+                    _sellers = value;
+                    OnPropertyChanged(nameof(Sellers));
+                }
+            }
+        }
         public ObservableCollection<Product> Products
         {
             get { return _product; }
@@ -66,7 +94,7 @@ namespace _2task.viewmodel
                     {
                         Product_Id = Convert.ToInt32(reader["Product_Id"]),
                         Product_Name = reader["Product_name"].ToString(),
-                        Category_id = Convert.ToInt32(reader["category_Id"]),
+                        Category_Id = Convert.ToInt32(reader["category_Id"]),
                         Seller_Name = reader["Seller_name"].ToString() + " " + reader["seller_surname"].ToString(),
                         Quantity = reader["Quantity"] != DBNull.Value ? Convert.ToInt32(reader["Quantity"]) : (int?)null,
                         Price = reader["Price"] != DBNull.Value ? Convert.ToInt32(reader["Price"]) : (int?)null,
@@ -92,7 +120,7 @@ namespace _2task.viewmodel
                     connection.Open();
                     command.ExecuteNonQuery();
                         
-                }
+                }               
             }
             //}
             //else
@@ -134,15 +162,106 @@ namespace _2task.viewmodel
             //}
         }
 
+        private void AddProducts(Product newProduct)
+        {
+            try
+            {
+                string connectionString = Other.request;
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string query = "INSERT INTO Товар (product_name, seller_id, category_id, Quantity, Price) " +
+                               "VALUES (@ProductName, @SellerId, @CategoryId, @Quantity, @Price)";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@ProductName", newProduct.Product_Name);
+                    command.Parameters.AddWithValue("@SellerId", newProduct.Seller_Id);
+                    command.Parameters.AddWithValue("@CategoryId", newProduct.Category_Id);
+                    command.Parameters.AddWithValue("@Quantity", newProduct.Quantity);
+                    command.Parameters.AddWithValue("@Price", newProduct.Price);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+
+                MessageBox.Show("Новый продукт добавлен");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void LoadCategoriesFromDatabase()
+        {
+            Categories = new ObservableCollection<Category>();
+
+            string connectionString = Other.request;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT category_id, category_name FROM Категория_товара";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Categories.Add(new Category
+                    {
+                        CategoryId = Convert.ToInt32(reader["category_id"]),
+                        CategoryName = reader["category_name"].ToString()
+                    });
+                }
+
+                reader.Close();
+            }
+        }
+        private void LoadSellersFromDatabase()
+        {
+            Sellers = new ObservableCollection<Seller>();
+
+            string connectionString = Other.request;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT seller_id, seller_name, seller_surname FROM Продавцы";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Sellers.Add(new Seller
+                    {
+                        SellerId = Convert.ToInt32(reader["seller_id"]),
+                        SellerName = reader["seller_name"].ToString() + " " + reader["seller_surname"].ToString()
+                    });
+                }
+
+                reader.Close();
+            }
+        }
+        private void ExecuteAddProductCommand()
+        {
+            
+            Products.Add(new Product());
+            AddProducts(new Product());
+        }
+
         public CatalogViewModel()
         {
             Products = new ObservableCollection<Product>();
             SaveChangesCommand = new RelayCommand(SaveChanges);
             DeleteCommand = new RelayCommand(DeleteSelectedProducts);
+            AddCommand = new RelayCommand(ExecuteAddProductCommand);
+            LoadSellersFromDatabase();
+            LoadCategoriesFromDatabase();
             LoadProductsFromDatabase();
-        }
-        private void CloseWindow()
-        {
+           
         }
     }
 }

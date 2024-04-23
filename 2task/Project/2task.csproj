@@ -103,8 +103,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="model\Category.cs" />
     <Compile Include="model\Employee.cs" />
     <Compile Include="model\ReleasePoints.cs" />
+    <Compile Include="model\Seller.cs" />
     <Compile Include="viewmodel\ReleasePointsViewModel.cs" />
     <Compile Include="view\ReleasePointsView.xaml.cs">
       <DependentUpon>ReleasePointsView.xaml</DependentUpon>

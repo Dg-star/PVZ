@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Data.SqlClient;
 using System;
 
+namespace _2task.viewmodel
+{ 
 internal class ReleasePointsViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler PropertyChanged;
@@ -63,4 +65,5 @@ internal class ReleasePointsViewModel : INotifyPropertyChanged
         ReleasePointss = new ObservableCollection<ReleasePoints>();
         LoadProductsFromDatabase();
     }
+}
 }

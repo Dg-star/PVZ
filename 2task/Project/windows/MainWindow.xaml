@@ -4,9 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:_2task.view"
+        xmlns:viewmodel="clr-namespace:_2task.viewmodel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="1550">
+    <Window.Resources>
+        <viewmodel:CatalogViewModel x:Key="CatalogViewModel"/>
+        <viewmodel:LoginViewModel x:Key="LoginViewModel"/>
+        <viewmodel:ReleasePointsViewModel x:Key="ReleasePointsViewModel"/>
+    </Window.Resources>
     <Grid>
-        <view:CatalogView/>
+        <TabControl>
+            <TabItem DataContext="{StaticResource CatalogViewModel}">
+                <TabItem.Header>Каталог</TabItem.Header>
+                <view:CatalogView/>
+            </TabItem>
+            <TabItem DataContext="{StaticResource ReleasePointsViewModel}">
+                <TabItem.Header>Пункты выдачи</TabItem.Header>
+                <view:ReleasePointsView/>
+            </TabItem>
+            <TabItem DataContext="{StaticResource LoginViewModel}">
+                <TabItem.Header>Вход</TabItem.Header>
+                <view:LoginView/>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
